@@ -1,0 +1,51 @@
+﻿
+@{
+    ViewBag.Title = "Registration";
+    Layout = "~/Views/Shared/ManageLayout.cshtml";
+}
+
+@if (ViewBag.Registratition.Count > 0)
+{<table>
+        <thead>
+            <tr>
+                <th>分类名称</th>
+                <th>比赛名称</th>
+                <th>比赛地址</th>
+                <th>比赛时间</th>
+                <th>比赛详情</th>
+                <th>发布人</th>             
+                <th>报名</th>
+            </tr>
+        </thead>
+        <tbody>
+            @for (int i = 0; i < ViewBag.Registratition.Count; i++)
+            {
+                <tr>
+                    <td>@ViewBag.Registratition[i].CategoryName</td>
+                    <td>@ViewBag.Registratition[i].CompetitionName</td>
+                    <td>@ViewBag.Registratition[i].ComAddress</td>
+                    <td>@ViewBag.Registratition[i].Comdate</td>
+                    <td>@ViewBag.Registratition[i].Comdateil</td>
+                    <td>@ViewBag.Registratition[i].UseName</td>
+                    <td>
+                        @if (ViewBag.Registratition[i].IsRegistratition)
+                        {
+                           <span> 已报名</span>
+
+                        }
+                        else
+                        {
+                            <a class="edit" href="/Main/Registrations?id=@ViewBag.Registratition[i].CompetitionId">报名</a>
+
+                        }
+                    </td>
+
+
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    
+}
+

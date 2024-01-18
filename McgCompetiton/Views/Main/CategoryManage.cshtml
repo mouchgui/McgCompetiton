@@ -1,0 +1,62 @@
+﻿
+@{
+    ViewBag.Title = "CategoryManage";
+    Layout = "~/Views/Shared/ManageLayout.cshtml";
+}
+
+
+<style>
+    form {
+        margin: auto;
+    }
+
+    .login-input {
+        border: 1px solid rgba(0, 148, 255,.5);
+        margin-bottom: 10px;
+    }
+</style>
+<form action="/Main/AddCategory" method="post" class="login-form">
+    <input type="text" class="login-input" name="CategoryName" placeholder="请填写分类名称" />
+    <input type="text" class="login-input" name="CategoryId" style="display:none" placeholder="请填写分类名称" />
+    <input type="submit" class="login-button" value="提交" />
+</form>
+@if (ViewBag.Catergory.Count > 0)
+{<table>
+        <thead>
+            <tr>
+            
+                <th>分类名称</th>
+            
+                <th>操作</th>
+            </tr>
+        </thead>
+        <tbody>
+            @for (int i = 0; i < ViewBag.Catergory.Count; i++)
+            {
+                <tr>
+                    <td>@ViewBag.Catergory[i].CategoryName</td>
+                 
+                    <td>
+                        <a class="edit" data-id="@ViewBag.Catergory[i].CategoryId" href="#">编辑</a>
+                        <a class="del" href="/Main/CategoryDelete?id=@ViewBag.Catergory[i].CategoryId">删除</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <script>
+        const btns = document.querySelectorAll('.edit')
+        let Id = document.getElementsByName('CategoryId')[0]
+      
+        let cater = document.getElementsByName('CategoryName')[0]
+        btns.forEach(btn => {
+            btn.addEventListener('click', () => {             
+                Id.value = btn.getAttribute("data-id")             
+                cater.value = btn.parentNode.previousElementSibling.innerHTML
+            })
+        })
+    </script>
+}
+
+

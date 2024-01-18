@@ -1,0 +1,93 @@
+﻿<!DOCTYPE html>
+
+<html lang="zh">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
+    <meta charset="utf-8" />
+    <title> 后台管理</title>
+    <meta name="viewport" content="width=device-width" />
+    <script src="~/McgStatic/jquery-3.7.js"></script>
+    <link href="~/McgStatic/McgCss.css" rel="stylesheet" />
+    <link href="~/McgStatic/dialog.css" rel="stylesheet" />
+</head>
+<body>
+    <div class="header">
+        <div class="nav">
+            <h1><a href="/Main/Index">管理系统</a></h1>
+            <ul>            
+                <li>
+                    @(((McgCompetiton.Models.Users)Session["user"]).UseName)
+                    <div class="mForm">
+                        <div>个人中心</div>
+                        <a href="/Main/Logout">退出登录</a>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="sidebar">
+        <ul>
+
+            @if (((McgCompetiton.Models.Users)Session["user"]).Roles == "管理员")
+            {
+                <li><a href="/Main/UserManage">用户管理</a></li>
+                <li><a href="/Main/CategoryManage">分类管理</a></li>
+                <li><a href="/Main/Comprtition">比赛管理</a></li>
+                <li><a href="/Main/RegistrationSelect">报名查询</a></li>
+
+            }
+
+            else
+            {
+
+                <li><a href="/Main/PubishComprtition">发布比赛</a></li>
+                <li><a href="/Main/Registration">报名比赛</a></li>
+            }
+
+
+        </ul>
+    </div>   
+  
+    <div class="popup">    
+        <div class="popup-content">
+            <div class="popTitle">
+                <span>个人信息</span>
+                <span class="close">x</span>
+            </div>
+            <form action="/Main/ModifyAdmin">
+                <input type="text" class="mtxt" name="UseName" value="@(((McgCompetiton.Models.Users)Session["user"]).UseName)" placeholder="请填写姓名" />
+              @*  <input type="text" class="mtxt" maxlength="11" name="AdminPhone" value="@(((McgGov.Models.Admins)Session["Admin"]).AdminPhone)" placeholder="请填写电话" />*@
+                <input type="password" class="mtxt" name="Pwd" value="@(((McgCompetiton.Models.Users)Session["user"]).Pwd)" placeholder="请填写密码" />
+                <button type="submit" class="mbtn">保存修改</button>
+            </form>
+        </div>
+    </div>
+    <div class="content">
+        @RenderBody()
+      
+
+    </div>   
+        <script>          
+            var open = document.querySelector(".mForm div")
+            var colse = document.querySelector(".popup")         
+            open.addEventListener("click", function () {
+                colse.style.display = "block";
+            });
+            $(function () {
+                $(".content").css("height", $(window).height() - 195 + "px");
+                $(window).resize(function () {
+                    $(".content").css("height", $(window).height() - 195 + "px");
+                })
+                $(".close").click(function () {
+                    $(".popup").css("display","none")
+                })
+            })
+            $(function () {
+                $(".nav li").click(function () {
+                    $(".mForm").css("display") == "none" ? $(".mForm").addClass("active") : $(".mForm").removeClass("active")
+                })
+            })
+               
+        </script>
+</body>
+</html>

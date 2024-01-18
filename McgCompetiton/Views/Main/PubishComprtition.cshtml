@@ -1,0 +1,179 @@
+﻿
+@{
+    ViewBag.Title = "PubishComprtition";
+    Layout = "~/Views/Shared/ManageLayout.cshtml";
+}
+<link href="~/McgStatic/McgCss.css" rel="stylesheet" />
+<link href="~/McgStatic/dialog.css" rel="stylesheet" />
+<style>
+    form {
+        margin: auto;
+    }
+
+    .login-input {
+        border: 1px solid rgba(0, 148, 255,.5);
+    }
+</style>
+<div class="login-container">
+    <form action="#" method="post" class="login-form" id="addCOM">
+        <div class="login-item">
+            <i class="iconfont icon-denglu-copy"></i>
+            <input class="login-input" type="text" name="CompetitionName" value="" placeholder="请输入比赛姓名" />
+        </div>
+        <div class="login-item">
+            <i class="iconfont icon-denglushimima "></i>
+            <input class="login-input" type="text" name="ComAddress" value="" placeholder="请输入比赛地址" />
+            <i id="hiddenpwd" class="iconfont icon-yanjing1"></i>
+        </div>
+        <div class="login-item">
+            <div class="droplist ">
+                <label for="custom-select">比赛类别</label>
+                <div id="custom-select"></div>
+            </div>
+        </div>
+        <div class="login-item">
+            <div class="mpricker">
+                <div class="date-picker">
+                    <label for="datepicker">比赛日期</label>
+                    <input type="text" id="datepicker" name="Comdate">
+                    <div class="calendar">
+                        <div class="calendar-header">
+                            <div class="prev-year" id="prev-year">&lt;&lt;</div>
+                            <div class="prev-month" id="prev-month">&lt;</div>
+                            <span class="current-date"></span>
+                            <div class="next-month" id="next-month">&gt;</div>
+                            <div class="next-year" id="next-year">&gt;&gt;</div>
+                        </div>
+                        <table></table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="login-item">
+            <i class="iconfont icon-denglu-copy"></i>
+            <textarea class="login-input" name="Comdateil" value="" placeholder="请输入比赛详情"></textarea>
+        </div>
+
+
+
+        <input class="login-button" type="button" value="发布" />
+
+    </form>
+    <div class="popMain">
+        <i class="iconfont icon-kuliankulian"></i>
+        <div class="popContent"></div>
+    </div>
+</div>
+<script src="~/McgStatic/m.js"></script>
+
+@if (ViewBag.PubishComprtition.Count > 0)
+{<table>
+        <thead>
+            <tr>
+                <th>分类名称</th>
+                <th>比赛名称</th>
+                <th>比赛地址</th>
+                <th>比赛时间</th>
+                <th>比赛详情</th>
+                <th>发布人</th>
+                <th>状态</th>
+            </tr>
+        </thead>
+        <tbody>
+            @for (int i = 0; i < ViewBag.PubishComprtition.Count; i++)
+            {
+                <tr>
+                    <td>@ViewBag.PubishComprtition[i].CategoryName</td>
+                    <td>@ViewBag.PubishComprtition[i].CompetitionName</td>
+                    <td>@ViewBag.PubishComprtition[i].ComAddress</td>
+                    <td>@ViewBag.PubishComprtition[i].Comdate</td>
+                    <td>@ViewBag.PubishComprtition[i].Comdateil</td>
+                    <td>@ViewBag.PubishComprtition[i].UseName</td>
+                    <td>@ViewBag.PubishComprtition[i].ComStartus</td>
+
+
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+<script>
+    const popContent = document.querySelector(".popContent")
+    $(function () {
+        $("#hiddenpwd").click(function () {
+            const pwd = $('[name="AdminPwd"]')
+            const sp = $("#hiddenpwd");
+            if (pwd.attr("type") == "text") {
+                pwd.attr("type", "password")
+                sp.addClass("icon-yanjing1")//不能直接用this
+                sp.removeClass("icon-yanjing")
+            }
+            else {
+                pwd.attr("type", "text")
+                sp.removeClass("icon-yanjing1")
+                sp.addClass("icon-yanjing")
+            }
+        })
+        $(".login-button").click(function () {
+            let Form = document.forms.addCOM
+            const cater = document.querySelector('.select-selected').getAttribute('data-value')
+            if (!cater) {
+                alert("请选择比赛类别")
+                return
+            }
+            $.ajax({
+                type: "post",
+                url: "/Main/PublishComprtition",
+                contentType: 'application/json',
+                data: JSON.stringify({
+                    CategoryId: cater,
+                    CompetitionName: Form.CompetitionName.value,
+                    ComAddress: Form.ComAddress.value,
+                    Comdate: Form.Comdate.value,
+                    Comdateil: Form.Comdateil.value,
+                    ComStartus: "待审核"
+                }),
+                success: function (res) {
+                    const ress = JSON.parse(res)
+                    if (ress.IsSuccess) {
+
+                        window.location.reload()
+                    }
+                    else {
+                        popContent.innerHTML = ress.ErrorMessage
+                        popContent.parentElement.style.display = "block"
+                        setTimeout(function () {
+                            popContent.parentElement.style.display = "none"
+                        }, 2000)
+                    }
+                }
+            });
+
+        })
+    })
+
+
+    function IsEmpty(name, mess) {
+        obj = name.value
+
+        if (typeof obj == "undefined" || obj == null || obj == "") {
+            name.style.border = "red 1px solid"
+            name.focus()
+            popContent.parentElement.style.display = "block"
+            popContent.innerHTML = mess + "不能为空！"
+            setTimeout(function () {
+                popContent.parentElement.style.display = "none"
+            }, 2000)
+
+            return false
+        }
+
+        else {
+            name.style.border = ""
+            return true
+        }
+    }
+</script>

@@ -1,0 +1,48 @@
+﻿
+@{
+    ViewBag.Title = "RegistrationSelect";
+    Layout = "~/Views/Shared/ManageLayout.cshtml";
+}
+
+
+
+
+@if (ViewBag.RegistrationSelect.Count > 0)
+{<table>
+        <thead>
+            <tr>
+                <th>分类名称</th>
+                <th>比赛名称</th>
+                <th>比赛地址</th>
+                <th>比赛时间</th>
+                <th>比赛详情</th>
+                <th>发布人</th>
+                <th>状态</th>
+                <th>报名人</th>
+            </tr>
+        </thead>
+        <tbody>
+            @for (int i = 0; i < ViewBag.RegistrationSelect.Count; i++)
+            {
+                <tr>
+                    <td>@ViewBag.RegistrationSelect[i].CategoryName</td>
+                    <td>@ViewBag.RegistrationSelect[i].CompetitionName</td>
+                    <td>@ViewBag.RegistrationSelect[i].ComAddress</td>
+                    <td>@ViewBag.RegistrationSelect[i].Comdate</td>
+                    <td>@ViewBag.RegistrationSelect[i].Comdateil</td>
+                    <td>@ViewBag.RegistrationSelect[i].UseName</td>
+                    <td>@ViewBag.RegistrationSelect[i].ComStartus</td>
+                    <td>
+                        @ViewBag.RegistrationSelect[i].Expr
+                    </td>
+
+
+                </tr>
+            }
+        </tbody>
+    </table>
+
+
+}
+
+

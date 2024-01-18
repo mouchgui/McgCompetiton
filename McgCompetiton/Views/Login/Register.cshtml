@@ -1,0 +1,124 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>用户注册</title>
+    <link href="~/McgStatic/iconfont.css" rel="stylesheet" />
+    <link href="~/McgStatic/Login.css" rel="stylesheet" />
+    <script src="~/McgStatic/jquery-3.7.js"></script>
+</head>
+
+<body>
+    <div class="login-container">
+        <form action="/" method="post" class="login-form">
+            <div class="login-item">
+                <i class="iconfont icon-denglu-copy"></i>
+                <input class="login-input" type="text" name="AdminName" value="" placeholder="请输入姓名" />
+            </div>
+            <div class="login-item">
+                <i class="iconfont icon-denglushimima "></i>
+                <input class="login-input" type="password" name="AdminPwd" value="" placeholder="请输入密码" />
+                <i id="hiddenpwd" class="iconfont icon-yanjing1"></i>
+            </div>
+            <input class="login-button" type="button" value="注册" />
+            <a href="/Login/Index">去登录</a>
+        </form>
+        <div class="popMain">
+            <i class="iconfont icon-kuliankulian"></i>
+            <div class="popContent"></div>
+        </div>
+    </div>
+
+    <script>
+        const popContent = document.querySelector(".popContent")
+        $(function () {
+            $("#hiddenpwd").click(function () {
+                const pwd = $('[name="AdminPwd"]')
+                const sp = $("#hiddenpwd");
+                if (pwd.attr("type") == "text") {
+                    pwd.attr("type", "password")
+                  sp.addClass("icon-yanjing1")//不能直接用this
+               sp.removeClass("icon-yanjing")
+                }
+                else {
+                    pwd.attr("type", "text")
+                sp.removeClass("icon-yanjing1")
+                 sp.addClass("icon-yanjing")
+                }
+            })
+            $(".login-button").click(function () {
+                const name = document.querySelector('[name="AdminName"]')
+                const pwd = document.querySelector('[name="AdminPwd"]')
+                if (!IsEmpty(name, "登录名")) {
+                    return
+                }
+                if (!IsEmpty(pwd, "密码")) {
+                    return
+                }
+                $.ajax({
+                    type: "post",
+                    url: "/Login/Register",
+                    contentType: 'application/json',
+                    data: JSON.stringify({ UseName: name.value, Pwd: pwd.value }),
+                    success: function (res) {
+                        console.log(res)
+                        const ress = JSON.parse(res)
+                        if (ress.IsSuccess) {
+
+                            window.location.href = "/Login/Index"
+                        }
+                        else {
+                            popContent.innerHTML = ress.ErrorMessage
+                            popContent.parentElement.style.display = "block"
+                            setTimeout(function () {
+                                popContent.parentElement.style.display = "none"
+                            }, 3000)
+                        }
+                    }
+                    });
+
+            })
+        })
+
+        function login() {
+            const name = document.querySelector('[name="AdminName"]')
+            const pwd = document.querySelector('[name="AdminPwd"]')
+            if (!IsEmpty(name,"登录名")) {
+                return
+            }
+            if (!IsEmpty(pwd, "密码")) {
+                return
+            }
+            $.post("/api/Admin/Admins", { "AdminCode": name,"AdminPwd":pwd }, function (res) {
+                alert(res)
+            })
+        }
+        function IsEmpty(name,mess) {
+            obj = name.value
+
+            if (typeof obj == "undefined" || obj == null || obj == "") {
+                name.style.border = "red 1px solid"
+                name.focus()
+                popContent.parentElement.style.display = "block"
+                popContent.innerHTML = mess + "不能为空！"
+                setTimeout(function () {
+                    popContent.parentElement.style.display = "none"
+                }, 2000)
+
+                return false
+            }
+
+            else {
+                name.style.border = ""
+                return true
+            }
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,53 @@
+﻿
+@{
+    ViewBag.Title = "UserManage";
+    Layout = "~/Views/Shared/ManageLayout.cshtml";
+}
+
+
+<style>
+    form {
+        margin: auto;
+    }
+
+    .login-input {
+        border: 1px solid rgba(0, 148, 255,.5);
+        margin-bottom: 10px;
+    }
+</style>
+ <form action="/Main/AddAdmin" method="post" class="login-form">
+     <input type="text" class="login-input" name="UseName" placeholder="请填写姓名" />
+     <select class="login-input" id="AdminGender" name="Roles">
+         <option value="管理员">管理员</option>
+         <option value="用户">用户</option>
+     </select>  
+     <input type="password" class="login-input" name="Pwd" placeholder="请填写密码" /> 
+     <input type="submit" class="login-button" placeholder="请填写姓名" value="添加" />
+ </form>
+@if (ViewBag.Admin.Count > 0)
+{<table>
+        <thead>
+            <tr>
+                <th>账号</th>
+                <th>姓名</th>
+                <th>密码</th>
+                <th>角色</th>
+                <th>操作</th>
+            </tr>
+        </thead>
+        <tbody>
+            @for (int i = 0; i < ViewBag.Admin.Count; i++)
+            {
+                <tr>
+                    <td>@ViewBag.Admin[i].UserId</td>
+                    <td>@ViewBag.Admin[i].UseName</td>
+                    <td>@ViewBag.Admin[i].Pwd</td>
+                    <td>@ViewBag.Admin[i].Roles</td>
+                    <td>                   
+                        <a class="del" href="/Main/AdminDelete?id=@ViewBag.Admin[i].UserId">删除</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}

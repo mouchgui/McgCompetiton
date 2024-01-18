@@ -1,0 +1,389 @@
+/*
+弹窗样式开始
+*/
+.draggable-header {
+    background-color: #a44d4d;
+    cursor: move;
+    border-top-left-radius: inherit;
+    border-top-right-radius: inherit;
+    display: flex;
+}
+
+.close-button {
+    float: right;
+    font-weight: bold;
+    cursor: pointer;
+    width: 10px;
+    height: inherit;
+    color: #fff;
+    padding: 8px;
+}
+.menve,.menv{
+    display: flex;
+   justify-content: space-around;
+}
+.menve{
+    padding: 8px 0 10px 10px;
+    text-align: center;
+}
+.menvLeft{
+   display: grid;
+   place-items: center;
+    margin-right: 5px;
+}
+.menvright div:first-child{
+    font-size: 10px;
+}
+.menvright div:last-child{
+    font-size: 20px;
+}
+.mleft{
+    /* text-align: center; */
+    display: flex;
+    place-items: center;
+    font-size: larger;
+}
+.mright{
+    display: flex;
+    flex: 1;
+    justify-content: space-around;
+}
+.droplist,.mpricker{
+    display: flex;
+    place-items: center;
+    background-color: rgba(53, 50, 50, 0.2);
+    border-radius: 5px;
+}
+.draggable-content {
+    padding: 8px;
+    /* display: flex;
+    justify-content: center;
+    align-items: center; */
+    border-bottom-left-radius: inherit;
+    border-bottom-right-radius: inherit;
+    flex: 1;
+    overflow: auto;
+}
+
+
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    /* 半透明黑色 */
+    z-index: 999;
+    /* 遮罩层位于其他元素之上 */
+    /* display: none;  */
+    /* visibility: hidden; */
+}
+
+.draggable-window {
+    position: absolute;
+    top: 50%;
+    /* 居中显示 */
+    left: 50%;
+    /* 居中显示 */
+    transform: translate(-50%, -50%);
+    /* 居中显示 */
+    width: 90vw;
+    height: 90vh;
+    background-color: #fff;
+    /* border: 1px solid #ccc; */
+    z-index: 10000;
+    /* 弹窗位于遮罩层之上 */
+    /* display: none; */
+    border-radius: 5px;
+    padding: 0;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    display: flex;
+    flex-direction: column;
+/* visibility: hidden; */
+
+}
+
+.header-title {
+    text-align: center;
+    flex: 1; padding: 8px;
+    border-radius: inherit;
+}
+/*弹窗样式结束*/
+.xyinfo{
+    display: flex;
+    width: 50%;
+}
+.xyinfo,.Enverment,.mmuen{
+    margin-bottom: 20px;
+}
+.Enverment>span{
+    color: #a44d4d;
+}
+.Enverment span:first-child{
+    margin-right: 10px;
+}
+.mmuen{
+    background-color: #0c853a;
+    color: #fff;
+    padding: 8px;
+    display: flex;
+    justify-content: space-between;
+   
+
+}
+.infocolum{
+    margin-right: 20px;
+    text-align: center;
+    display: block;
+   
+}
+.infocolum:last-child{
+    margin-right: 0;
+}
+.infocolum div:last-child{
+    /* white-space: pre-wrap; */
+    word-break: break-word;
+}
+.infocolum div:first-child{
+    white-space: nowrap;
+}
+/* 提示样式开始 */
+.notification {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #fff;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    opacity: 1;
+    visibility: visible;
+  }  
+  .notification.hidden {
+    opacity: 0;
+    visibility: hidden;
+  }  
+  /* 提示样式结束 */
+
+/* 下拉框样式开始*/
+.select-selected,.date-input{
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+    background-color: rgba(255, 255, 255, .9);
+    color: rgba(0, 0, 0, .9);
+    border: none;
+    outline: none;
+}
+/* .droplist{
+    display: flex;
+} */
+.custom-select {
+    position: relative;
+    display: inline-block;
+    width: 130px;
+  }
+  
+  .custom-select .select-selected {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 5px;
+    /* border: 1px solid #ccc; */
+    /* background-color: #fff; */
+    cursor: pointer;
+  }
+  
+  .custom-select .select-selected:hover {
+    background-color: rgba(255, 255, 255, .7);
+  
+  }
+  
+  .custom-select .select-selected:after {
+    content: "\25BC";
+    font-size: 12px;
+    margin-left: 5px;
+    /* transform: rotate(180deg);
+    transition: transform .3s ease-in-out; */
+  }
+  .custom-select .select-selected.dir::after{
+      /* animation: mcgRotate .5s 1 linear; */
+      transform: rotate(180deg);
+      /* transition: transform .3s ease-in-out; */
+  }
+  @keyframes mcgRotate {
+      from{
+  
+      }
+      to{
+          transform: rotate(180deg);
+      }
+      
+  }
+  .custom-select .select-items {
+    margin-top: 1px;
+    position: absolute;
+    background-color: #fff;
+    width: 100%;
+    max-height: 200px;
+    overflow-y: auto;
+    border: 1px solid #ccc;
+    z-index: 1;
+    border-bottom-left-radius:5px ;
+    border-bottom-right-radius: 5px;
+    display: none; /* 默认隐藏 */
+    background-color: rgba(255, 255, 255, .9);
+    color: rgba(0, 0, 0, .9);
+  }
+  
+   .open{
+    display: block !important; /* 展开时显示 */
+  }
+  /* .open{
+      display: block !important;
+  } */
+  .custom-select .select-items div {
+    padding: 10px;
+    cursor: pointer;
+  }
+  
+  .custom-select .select-items div:hover {
+    background-color: #f2f2f2;
+  }
+/* 下拉框组件样式结束 */
+
+
+/* 时间组件样式开始 */
+.date-picker {
+    position: relative;
+  display: flex;
+    background-color: #ccc;
+  border-radius: 5px;
+color: initial;
+/* initial继承浏览器默认值 */
+place-items: center;
+}
+.date-picker label{
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
+    padding-left: 5px;
+word-wrap: break-word;
+  
+}
+.date-picker input, .date-picker .calendar{
+    outline: none;       
+    border: 1px solid #ccc;
+    /* inherit继承最近父类 */
+    border-bottom-right-radius: inherit;
+}
+
+.calendar-header {
+    display: flex;
+    place-items: center;
+    justify-content: space-around;
+}
+
+.calendar-header div {
+    border: none;
+    background-color: inherit;
+}
+.date-picker input {
+    padding: 5px; border-top-right-radius: inherit;
+
+}
+
+.date-picker .calendar {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    z-index: 1;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    padding: 10px;
+    display: none;
+   border-radius: inherit;
+}
+
+.date-picker .calendar.show {
+    display: block;
+}
+
+.date-picker .calendar table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.date-picker .calendar th {
+
+    font-size: 10px;
+}
+
+.date-picker .calendar th:nth-last-child(-n+2) {
+    color: red;
+}
+
+.date-picker .calendar th,
+.date-picker .calendar td {
+    text-align: center;
+    padding: 5px;
+}
+
+.date-picker .calendar td:hover {
+    background-color: #f4f4f4;
+    cursor: pointer;
+}
+
+.date-picker .calendar .weekend {
+    color: red;
+}
+
+.selected {
+    background-color: #569ff7;
+    color: #fff;
+}
+
+.noCurrentdate {
+    color: rgba(0, 0, 0, .5);
+}
+.noCurrentweek{
+    color: rgba(253, 3, 3, 0.5);
+}
+/* 
+按钮组样式开始
+*/
+.mbtns{
+    display: flex;
+    background-color:rgba(60, 172, 16, 1);
+    border-radius: 5px;
+  
+}
+.mbtns button{
+    border: none;
+    background-color: inherit;
+    border-left: 1px solid rgba( 28,100,0, .6);
+    border-right: 1px solid rgba( 28,100,0, .6);
+    color: #fff;
+    padding: 5px;
+
+}
+.mbtns button:first-child{
+   
+    border-top-left-radius: inherit;
+    border-bottom-left-radius: inherit;
+
+}
+.mbtns button:last-child{
+   
+    border-top-right-radius: inherit;
+    border-bottom-right-radius: inherit;
+    
+}
+.mbtns button.active{
+    background-color:rgba(44, 147, 19, 0.9);
+}
+.mbtns button:hover{
+    background-color:rgba(44, 147, 19, 0.9);
+}
+/* 按钮组样式结束*/
